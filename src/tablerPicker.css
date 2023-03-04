@@ -1,0 +1,10 @@
+#taPi-toggle-icon {
+    display: block;
+    width: 21px;
+    height: 21px;
+    margin-top: 2px;
+}
+
+[data-pid="logseq-tabler-picker"] {
+    z-index: 999 !important;
+}
