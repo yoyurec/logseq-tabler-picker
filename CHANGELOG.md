@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/yoyurec/logseq-tabler-picker/compare/v1.0.1...v1.1.0) (2023-03-04)
+
+
+### Features
+
+* **category:** add selector and filtering ([bc7eb75](https://github.com/yoyurec/logseq-tabler-picker/commit/bc7eb75b2e469ee3cafa431438336140be7b0b58))
+
 ## [1.0.1](https://github.com/yoyurec/logseq-tabler-picker/compare/v1.0.0...v1.0.1) (2023-03-04)
 
 
