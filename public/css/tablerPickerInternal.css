@@ -1,5 +1,8 @@
 :root {
     --font-os-system: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    --icon-height: 64px;
+    --icon-margin: 2px;
+    --icon-padding: 4px;
 }
 
 html, body {
@@ -28,8 +31,9 @@ html, body {
     margin: 4px 8px;
 }
 
-#icon-picker-search {
-    width: 300px;
+#icon-picker-search,
+#icon-picker-category {
+    width: 210px;
     height: 30px;
     margin: 0 0 8px 3px;
     padding: 0 8px;
@@ -40,13 +44,22 @@ html, body {
     background: transparent;
 }
 
+#icon-picker-category {
+    width: 180px;
+}
+
+#icon-picker-category option {
+    color: var(--ls-primary-text-color);
+    background-color: var(--ls-primary-background-color);
+}
+
 #icon-picker-search:focus {
     outline: none;
 }
 
 #icon-picker-list-wrapper {
-    width: 430px;
-    height: 306px;
+    width: 420px;
+    height: calc((var(--icon-height) + var(--icon-margin) * 2 + var(--icon-padding) * 2 + 2px)* 4);
     overflow-y: auto;
 }
 
@@ -58,9 +71,10 @@ html, body {
 
 .icon-item {
     float: left;
-    margin: 2px;
-    padding: 6px;
+    margin: var(--icon-margin);
+    padding: var(--icon-padding);
     width: 64px;
+    height: var(--icon-height);
     text-align: center;
     border-radius: 4px;
     border: 1px solid var(--ls-border-color);

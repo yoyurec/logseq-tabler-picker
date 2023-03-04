@@ -1,8 +1,8 @@
-import { LSPluginBaseInfo, SettingSchemaDesc } from '@logseq/libs/dist/LSPlugin.user';
+import { SettingSchemaDesc } from '@logseq/libs/dist/LSPlugin.user';
 
 import { doc, body, globals } from '../globals';
 import { checkPluginUpdate } from '../utils';
-import { generatePluginPopup, togglePluginPopup } from './pluginPopup';
+import { initPluginPopup, togglePluginPopup } from './pluginPopup';
 
 export const pluginLoad = () => {
     body.classList.add(globals.isPluginEnabled);
@@ -10,7 +10,7 @@ export const pluginLoad = () => {
     logseq.useSettingsSchema(settingsConfig);
     globals.pluginConfig = logseq.settings;
 
-    generatePluginPopup();
+    initPluginPopup();
 
     logseq.provideModel({
         togglePluginPopup: togglePluginPopup
@@ -31,10 +31,7 @@ export const pluginLoad = () => {
     );
 
     setTimeout(() => {
-        if (doc.head) {
-            const logseqCSS = doc.head.querySelector(`link[href="./css/style.css"]`);
-            logseqCSS!.insertAdjacentHTML('afterend', `<link rel="stylesheet" id="css-tablerPicker" href="lsp://logseq.io/${globals.pluginID}/dist/assets/tablerPicker.css">`)
-        }
+        doc.head.insertAdjacentHTML('afterend', `<link rel="stylesheet" id="css-tablerPicker" href="lsp://logseq.io/${globals.pluginID}/dist/assets/tablerPicker.css">`)
     }, 100);
 
     setTimeout(() => {

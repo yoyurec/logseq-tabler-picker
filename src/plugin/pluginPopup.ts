@@ -1,6 +1,6 @@
 import { debounce } from '@github/mini-throttle';
 
-import { doc } from '../globals';
+import { doc, globals } from '../globals';
 import { getMainCSSColors, injectPluginCSS } from '../utils';
 
 import tablerIconsListJSON from './tablerIcons.json';
@@ -10,6 +10,28 @@ type iconItem = {
     n: string;
     t: string;
     u: string;
+    c: string;
+}
+
+const app = document.getElementById('app');
+const appInner = document.getElementById('app-inner');
+const iconPickerList = document.getElementById('icon-picker-list');
+const searchField = document.getElementById('icon-picker-search') as HTMLInputElement;
+const searchCategory = document.getElementById('icon-picker-category') as HTMLInputElement;
+let existingIconsList: iconItem[] = [];
+
+export const initPluginPopup = () => {
+    logseq.Editor.registerSlashCommand('✨ Tabler icon picker', openPopupInPlace);
+
+    app!.addEventListener('click', containerClickHandler);
+    iconPickerList!.addEventListener('click', iconPickerListClickHandler);
+    searchField!.addEventListener('keyup', iconPickerSearchHandler);
+    searchCategory!.addEventListener('change', iconPickerCategoryHandler);
+
+    existingIconsList = getExistingIconsList();
+    globals.iconsCategoryList = [...existingIconsList];
+    globals.iconsList = [...globals.iconsCategoryList];
+    updateIconPickerList();
 }
 
 export const togglePluginPopup = () => {
@@ -53,19 +75,6 @@ const getExistingIconsList = () => {
     return tablerIconsListJSON.filter(item => logseqIconsListJSON.includes(item.u));
 }
 
-const app = document.getElementById('app');
-const iconPickerList = document.getElementById('icon-picker-list');
-const existingIconsList = getExistingIconsList();
-
-export const generatePluginPopup = () => {
-    app!.addEventListener('click', containerClickHandler);
-    iconPickerList!.addEventListener('click', iconPickerListClickHandler);
-    const searchField = document.getElementById('icon-picker-search') as HTMLInputElement;
-    searchField!.addEventListener('keyup', iconPickerSearchHandler);
-    const iconPickerHTML = generateIconPicker(existingIconsList);
-    iconPickerList?.insertAdjacentHTML('afterbegin', iconPickerHTML);
-}
-
 const containerClickHandler = (e: Event) => {
     const target = e.target as HTMLElement;
     if (!target.closest('#app-inner')) {
@@ -85,17 +94,58 @@ const iconPickerListClickHandler = (e: Event) => {
     }
 }
 
-const iconPickerSearchHandler = debounce((e: Event) => {
+const iconPickerSearchHandler = debounce((e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+        logseq.hideMainUI({ restoreEditingCursor: true })
+        searchField.value = '';
+    }
     const target = e.target as HTMLInputElement;
     const searchText = target.value.toLowerCase();
-    iconPickerList?.replaceChildren();
-    const filteredList = existingIconsList.filter(item => item.t.includes(searchText))
-    const iconPickerHTML = generateIconPicker(filteredList);
-    iconPickerList?.insertAdjacentHTML('afterbegin', iconPickerHTML);
+    filterListByText(searchText);
+    updateIconPickerList();
 }, 500);
 
-const generateIconPicker = (list:iconItem[]): string => {
+const filterListByText = (searchText: string) => {
+    if (!searchText) {
+        globals.iconsList = [...globals.iconsCategoryList];
+    } else {
+        globals.iconsList = globals.iconsCategoryList.filter((item: iconItem) => item.t.includes(searchText))
+    }
+}
+
+const iconPickerCategoryHandler = (e: Event) => {
+    const target = e.target as HTMLSelectElement;
+    const category = target.value;
+    if (!category) {
+        // if 'All'
+        globals.iconsCategoryList = [...existingIconsList];
+    } else {
+        // Category
+        globals.iconsCategoryList = existingIconsList.filter((item: iconItem) => item.c === category);
+    }
+    const searchText = searchField.value.toLowerCase();
+    filterListByText(searchText);
+    updateIconPickerList();
+}
+
+const getIconsListHTML = (list:iconItem[]): string => {
     return list.map((item) => {
-        return `<div class="icon-item"><button class="icon-glyph">&#x${item.u};</button><button class="icon-code" tabindex="-1">${item.u}</button></div>`;
+        return `<div class="icon-item"><button class="icon-glyph" title="${item.n}">&#x${item.u};</button><button class="icon-code" title="${item.t}" tabindex="-1">${item.u}</button></div>`;
     }).join('');
+}
+
+const updateIconPickerList = () => {
+    const iconPickerHTML = getIconsListHTML(globals.iconsList);
+    iconPickerList?.replaceChildren();
+    iconPickerList?.insertAdjacentHTML('afterbegin', iconPickerHTML);
+}
+
+const openPopupInPlace = async () => {
+    // @ts-ignore
+    const { left, top, rect } = await logseq.Editor.getEditingCursorPosition();
+    Object.assign(appInner!.style, {
+        top: top + rect.top + 'px',
+        left: left + rect.left + 'px',
+    })
+    logseq.showMainUI();
 }
