@@ -14,5 +14,5 @@ export const globals: globalsType = {
     pluginConfig: null,
     isPluginEnabled: 'is-taPi-enabled',
     iconsList: [],
-    iconsCategoryList: [],
+    iconsCategoryList: []
 };

@@ -19,14 +19,7 @@
 
 ### ✨ Tabler icon picker plugin for Logseq
 
-## Features
-* Search, copy and insert Tabler icons to page content
-
-![](https://github.com//yoyurec/logseq-tabler-picker/raw/main/screenshots/screen.png)
-
 ## Installation
-
-### Plugin for desktop app
 
 From Logseq store - `Plugins -> Marketplace`
 
@@ -34,7 +27,17 @@ From Logseq store - `Plugins -> Marketplace`
 
 ## Features
 
-...
+### Toolbar popup
+Use button on plugins panel for search & copy
+
+![](https://github.com//yoyurec/logseq-tabler-picker/raw/main/screenshots/screen.png)
+
+### Inline popup
+Use `/` menu when editing block content for search & insert
+
+![](https://github.com//yoyurec/logseq-tabler-picker/raw/main/screenshots/menu.png)
+
+OR use hotkey `ctrl+shift+t` (`mod+shift+t`) 😎
 
 ## What is Logseq?
 Logseq is a privacy-first, open-source knowledge base. Visit https://logseq.com for more information.

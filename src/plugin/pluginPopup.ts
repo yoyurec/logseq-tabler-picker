@@ -21,7 +21,18 @@ const searchCategory = document.getElementById('icon-picker-category') as HTMLIn
 let existingIconsList: iconItem[] = [];
 
 export const initPluginPopup = () => {
+
     logseq.Editor.registerSlashCommand('✨ Tabler icon picker', openPopupInPlace);
+
+    logseq.App.registerCommand(
+        'showTablerInplace',
+        {
+            key: 'inlineTablerPicker',
+            label: 'Show Tabler picker',
+            keybinding: { binding: globals.pluginConfig.showTablerInplace },
+        },
+        openPopupInPlace
+    );
 
     app!.addEventListener('click', containerClickHandler);
     iconPickerList!.addEventListener('click', iconPickerListClickHandler);
@@ -34,17 +45,14 @@ export const initPluginPopup = () => {
     updateIconPickerList();
 }
 
-export const togglePluginPopup = () => {
-    if (!logseq.isMainUIVisible) {
-        openPluginPopup();
-    } else {
-        closePluginPopup();
-    }
+export const showPluginToolbarPopup = () => {
+    setPopupPosition();
+    iconPickerList!.dataset.invokedFrom = 'toolbar';
+    openPluginPopup();
 }
 
 const openPluginPopup = () => {
     injectPluginCSS('logseq-tabler-picker_iframe', 'taPi-vars', getMainCSSColors());
-    setPopupPosition();
     logseq.showMainUI();
     setTimeout(() => {
         const searchField = document.getElementById('icon-picker-search') as HTMLInputElement;
@@ -52,8 +60,20 @@ const openPluginPopup = () => {
     }, 500)
 }
 
-const closePluginPopup = async () => {
-    logseq.hideMainUI();
+const closePluginPopup = () => {
+    logseq.hideMainUI({ restoreEditingCursor: true });
+    setTimeout(() => {
+        iconPickerList!.parentElement!.scrollTop = 0;
+        searchField.value = '';
+        globals.iconsList = [...globals.iconsCategoryList];
+        updateIconPickerList();
+     }, 1000)
+}
+
+export const openPopupInPlace = async () => {
+    await setPopupInPlacePosition();
+    iconPickerList!.dataset.invokedFrom = 'inplace';
+    openPluginPopup();
 }
 
 const setPopupPosition = () => {
@@ -65,14 +85,24 @@ const setPopupPosition = () => {
             appInner!.style,
             {
                 top: `${buttonPos.top + 40}px`,
-                right: `0px`
+                right: `0px`,
+                left: 'unset'
             }
         );
     }
 }
 
-const getExistingIconsList = () => {
-    return tablerIconsListJSON.filter(item => logseqIconsListJSON.includes(item.u));
+const setPopupInPlacePosition = async () => {
+    // @ts-ignore
+    const { left, top, rect } = await logseq.Editor.getEditingCursorPosition();
+    Object.assign(
+        appInner!.style,
+        {
+            top: top + rect.top + 26 + 'px',
+            left: left + rect.left + 5 + 'px',
+            right: 'unset'
+        }
+    )
 }
 
 const containerClickHandler = (e: Event) => {
@@ -82,28 +112,39 @@ const containerClickHandler = (e: Event) => {
     }
 }
 
-const iconPickerListClickHandler = (e: Event) => {
+const getExistingIconsList = () => {
+    return tablerIconsListJSON.filter(item => logseqIconsListJSON.includes(item.u));
+}
+
+const iconPickerListClickHandler = async (e: Event) => {
     const target = e.target as HTMLElement;
     if (target) {
         const content = target.innerHTML || '';
-        navigator.clipboard.writeText(content).then(() => {
-            logseq.UI.showMsg(`Icon ${target.className.replace('icon-', '')} copied to clipboard`, 'success', { timeout: 1500 });
-          },() => {
-            console.error('Failed to copy');
-          });
+        if (iconPickerList!.dataset.invokedFrom == 'toolbar') {
+            navigator.clipboard.writeText(content).then(() => {
+                logseq.UI.showMsg(`Icon ${target.className.replace('icon-', '')} copied to clipboard`, 'success', { timeout: 1500 });
+            }, () => {
+                console.error('Failed to copy');
+            });
+        }
+        if (iconPickerList!.dataset.invokedFrom == 'inplace') {
+            if (globals.pluginConfig.hideAfterInsert) {
+                closePluginPopup();
+            }
+            await logseq.Editor.insertAtEditingCursor(content);
+        }
     }
 }
 
 const iconPickerSearchHandler = debounce((e: KeyboardEvent) => {
     if (e.key === 'Escape') {
-        logseq.hideMainUI({ restoreEditingCursor: true })
-        searchField.value = '';
+        closePluginPopup();
     }
     const target = e.target as HTMLInputElement;
     const searchText = target.value.toLowerCase();
     filterListByText(searchText);
     updateIconPickerList();
-}, 500);
+}, 300);
 
 const filterListByText = (searchText: string) => {
     if (!searchText) {
@@ -138,14 +179,4 @@ const updateIconPickerList = () => {
     const iconPickerHTML = getIconsListHTML(globals.iconsList);
     iconPickerList?.replaceChildren();
     iconPickerList?.insertAdjacentHTML('afterbegin', iconPickerHTML);
-}
-
-const openPopupInPlace = async () => {
-    // @ts-ignore
-    const { left, top, rect } = await logseq.Editor.getEditingCursorPosition();
-    Object.assign(appInner!.style, {
-        top: top + rect.top + 'px',
-        left: left + rect.left + 'px',
-    })
-    logseq.showMainUI();
 }

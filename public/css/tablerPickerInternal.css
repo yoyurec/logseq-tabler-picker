@@ -5,6 +5,10 @@
     --icon-padding: 4px;
 }
 
+:focus-visible {
+    outline-color: var(--ls-link-text-color);
+}
+
 html, body {
     padding: 0;
     margin: 0;
@@ -22,7 +26,7 @@ html, body {
 #app-inner {
     position: absolute;
     padding: 8px 0;
-    background-color: var(--ls-primary-background-color);
+    background-color: var(--ls-a-chosen-bg);
     border: 1px solid var(--ls-border-color);
     border-radius: 6px;
 }
@@ -41,7 +45,7 @@ html, body {
     font-size: 14px;
     border: 1px solid var(--ls-border-color);
     border-radius: 4px;
-    background: transparent;
+    background-color: var(--ls-primary-background-color);
 }
 
 #icon-picker-category {
@@ -63,12 +67,6 @@ html, body {
     overflow-y: auto;
 }
 
-#icon-picker-list {
-    /* display: grid;
-    grid-gap: 4px;
-    grid-template-columns: repeat(4, 1fr); */
-}
-
 .icon-item {
     float: left;
     margin: var(--icon-margin);
@@ -78,12 +76,19 @@ html, body {
     text-align: center;
     border-radius: 4px;
     border: 1px solid var(--ls-border-color);
+    background-color: var(--ls-primary-background-color);
+}
+
+#icon-picker-list[data-invoked-from="inplace"] .icon-item {
+    height: unset;
+    margin: 0;
+    padding: 0;
 }
 
 .icon-glyph {
-    width: 54px;
     margin: 2px auto;
     padding: 4px 0;
+    width: 100%;
     font-family: 'tabler-icons';
     font-weight: 400;
     font-size: 24px;
@@ -96,6 +101,11 @@ html, body {
 }
 .icon-glyph:hover {
     background-color: var(--ls-a-chosen-bg);
+}
+
+#icon-picker-list[data-invoked-from="inplace"] .icon-glyph {
+    margin: 0;
+    padding: 8px 0;
 }
 
 .icon-code {
@@ -112,9 +122,6 @@ html, body {
 .icon-code:hover {
     opacity: 0.8;
 }
-
-.icon-name {
-    margin: 2px 0;
-    font-size: 12px;
-    user-select: none;
+#icon-picker-list[data-invoked-from="inplace"] .icon-code {
+    display: none;
 }

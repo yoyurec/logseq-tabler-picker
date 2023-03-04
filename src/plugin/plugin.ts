@@ -2,7 +2,7 @@ import { SettingSchemaDesc } from '@logseq/libs/dist/LSPlugin.user';
 
 import { doc, body, globals } from '../globals';
 import { checkPluginUpdate } from '../utils';
-import { initPluginPopup, togglePluginPopup } from './pluginPopup';
+import { initPluginPopup, showPluginToolbarPopup } from './pluginPopup';
 
 export const pluginLoad = () => {
     body.classList.add(globals.isPluginEnabled);
@@ -13,7 +13,7 @@ export const pluginLoad = () => {
     initPluginPopup();
 
     logseq.provideModel({
-        togglePluginPopup: togglePluginPopup
+        showPluginToolbarPopup: showPluginToolbarPopup
     });
 
     logseq.App.registerUIItem(
@@ -23,7 +23,7 @@ export const pluginLoad = () => {
             template: `
                 <button
                 class="button" id="taPi-toggle-button"
-                data-on-click="togglePluginPopup" data-rect>
+                data-on-click="showPluginToolbarPopup" data-rect>
                     <span id="taPi-toggle-icon" class="ti ti-triangle-square-circle"></span>
                 </button>
             `
@@ -31,7 +31,7 @@ export const pluginLoad = () => {
     );
 
     setTimeout(() => {
-        doc.head.insertAdjacentHTML('afterend', `<link rel="stylesheet" id="css-tablerPicker" href="lsp://logseq.io/${globals.pluginID}/dist/assets/tablerPicker.css">`)
+        doc.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" id="css-tablerPicker" href="lsp://logseq.io/${globals.pluginID}/dist/assets/tablerPicker.css">`)
     }, 100);
 
     setTimeout(() => {
@@ -54,6 +54,27 @@ const pluginUnload = () => {
 }
 
 const settingsConfig: SettingSchemaDesc[] = [
+    {
+        key: 'settingsHeading',
+        title: 'Settings',
+        description: '',
+        type: 'heading',
+        default: null,
+    },
+    {
+        key: 'hideAfterInsert',
+        title: '',
+        description: 'Hide inline popup after inserting icon?',
+        type: 'boolean',
+        default: true,
+    },
+    {
+        key: 'showTablerInplace',
+        title: 'Show Tabler picker',
+        description: 'Shortcut to open icon picker on editing',
+        default: 'mod+shift+t',
+        type: 'string',
+    },
     {
         key: 'otherHeading',
         title: 'Other',
