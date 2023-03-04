@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/yoyurec/logseq-tabler-picker/compare/v1.1.0...v1.2.0) (2023-03-04)
+
+
+### Features
+
+* **all:** hotkey, settings, inline popup, etc ([93c015e](https://github.com/yoyurec/logseq-tabler-picker/commit/93c015e0d197b5d9ac7af2643bf947437236f58d))
+
 # [1.1.0](https://github.com/yoyurec/logseq-tabler-picker/compare/v1.0.1...v1.1.0) (2023-03-04)
 
 
