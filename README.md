@@ -12,8 +12,8 @@
 
 <h1 align="center">"Tabler picker" plugin for Logseq</h1>
 <p align="center">
-    <a href="https://github.com/yoyurec/logseq-awesome-props">
-        <img src="https://github.com/yoyurec/logseq-awesome-props/raw/main/icon.png" alt="logo" width="128" height="128" />
+    <a href="https://github.com/yoyurec/logseq-tabler-picker">
+        <img src="https://github.com/yoyurec/logseq-tabler-picker/raw/main/icon.png" alt="logo" width="128" height="128" />
     </a>
 </p>
 
