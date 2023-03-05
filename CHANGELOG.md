@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/yoyurec/logseq-tabler-picker/compare/v1.3.2...v1.4.0) (2023-03-05)
+
+
+### Features
+
+* **popup:** add close button ([f517f30](https://github.com/yoyurec/logseq-tabler-picker/commit/f517f308c29d3110ceaf66ca05606da44125cdf6))
+
 ## [1.3.2](https://github.com/yoyurec/logseq-tabler-picker/compare/v1.3.1...v1.3.2) (2023-03-05)
 
 
