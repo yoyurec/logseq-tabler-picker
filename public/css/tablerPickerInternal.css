@@ -26,9 +26,24 @@ html, body {
 #app-inner {
     position: absolute;
     padding: 8px 0;
-    background-color: var(--ls-a-chosen-bg);
+    background-color: var(--ls-primary-background-color);
     border: 1px solid var(--ls-border-color);
     border-radius: 6px;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%);
+}
+
+#app-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 2px;
+    opacity: 0.8;
+    transition: 0.1s;
+    cursor: pointer;
+}
+#app-close:hover {
+    transform: scale(1.3);
+    opacity: 1;
 }
 
 #icon-picker {
@@ -39,17 +54,17 @@ html, body {
 #icon-picker-category {
     width: 210px;
     height: 30px;
-    margin: 0 0 8px 3px;
+    margin: 2px 0 10px 2px;
     padding: 0 8px;
     font-family: var(--font-os-system);
     font-size: 14px;
     border: 1px solid var(--ls-border-color);
     border-radius: 4px;
-    background-color: var(--ls-primary-background-color);
+    background-color: var(--ls-a-chosen-bg);
 }
 
 #icon-picker-category {
-    width: 180px;
+    width: 150px;
 }
 
 #icon-picker-category option {

@@ -14,6 +14,7 @@ type iconItem = {
 }
 
 const app = document.getElementById('app');
+const appClose = document.getElementById('app-close');
 const appInner = document.getElementById('app-inner');
 const iconPickerList = document.getElementById('icon-picker-list');
 const searchField = document.getElementById('icon-picker-search') as HTMLInputElement;
@@ -35,6 +36,7 @@ export const initPluginPopup = () => {
     );
 
     app!.addEventListener('click', containerClickHandler);
+    appClose!.addEventListener('click', appCloseClickHandler);
     iconPickerList!.addEventListener('click', iconPickerListClickHandler);
     searchField!.addEventListener('keyup', iconPickerSearchHandler);
     searchCategory!.addEventListener('change', iconPickerCategoryHandler);
@@ -112,6 +114,10 @@ const containerClickHandler = (e: Event) => {
     }
 }
 
+const appCloseClickHandler = () => {
+    closePluginPopup();
+}
+
 const getExistingIconsList = () => {
     return tablerIconsListJSON.filter(item => logseqIconsListJSON.includes(item.u));
 }
@@ -143,6 +149,7 @@ const iconPickerSearchHandler = debounce((e: KeyboardEvent) => {
     const target = e.target as HTMLInputElement;
     const searchText = target.value.toLowerCase();
     filterListByText(searchText);
+    iconPickerList!.parentElement!.scrollTop = 0;
     updateIconPickerList();
 }, 300);
 
@@ -166,6 +173,7 @@ const iconPickerCategoryHandler = (e: Event) => {
     }
     const searchText = searchField.value.toLowerCase();
     filterListByText(searchText);
+    iconPickerList!.parentElement!.scrollTop = 0;
     updateIconPickerList();
 }
 
