@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/yoyurec/logseq-tabler-picker/compare/v1.3.1...v1.3.2) (2023-03-05)
+
+
+### Bug Fixes
+
+* **fonts:** logseq fonts fix ([a210ebd](https://github.com/yoyurec/logseq-tabler-picker/commit/a210ebd4d557fae061a254f3e60e27739f2b61ce))
+
 ## [1.3.1](https://github.com/yoyurec/logseq-tabler-picker/compare/v1.3.0...v1.3.1) (2023-03-05)
 
 
