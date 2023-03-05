@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/yoyurec/logseq-tabler-picker/compare/v1.2.0...v1.3.0) (2023-03-05)
+
+
+### Features
+
+* **content:** add Tabler glyphs support ([45e3453](https://github.com/yoyurec/logseq-tabler-picker/commit/45e34535c6bb53c7d3a49ae3da8df45f58242f53))
+
 # [1.2.0](https://github.com/yoyurec/logseq-tabler-picker/compare/v1.1.0...v1.2.0) (2023-03-04)
 
 
