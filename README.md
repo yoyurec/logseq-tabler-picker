@@ -43,7 +43,7 @@ OR use hotkey `ctrl+shift+t` (`mod+shift+t`) 😎
 
 In addition to use icon codes with other plugins you can insert and view it inline in your content, just like emojis!
 
-https://user-images.githubusercontent.com/137919/222980372-479a1dd1-daf0-41fb-a5af-c55c81de2fed.mp4
+https://user-images.githubusercontent.com/137919/222980456-a3828c51-049d-46d0-95fc-18efb1ecb2c7.mp4
 
 ## What is Logseq?
 Logseq is a privacy-first, open-source knowledge base. Visit https://logseq.com for more information.
