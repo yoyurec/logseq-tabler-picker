@@ -43,7 +43,7 @@ OR use hotkey `ctrl+shift+t` (`mod+shift+t`) 😎
 
 In addition to use icon codes with other plugins you can insert and view it inline in your content, just like emojis!
 
-![](https://github.com//yoyurec/logseq-tabler-picker/raw/main/screenshots/inline-icons.mp4)
+https://github.com//yoyurec/logseq-tabler-picker/raw/main/screenshots/inline-icons.mp4
 
 ## What is Logseq?
 Logseq is a privacy-first, open-source knowledge base. Visit https://logseq.com for more information.
