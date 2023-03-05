@@ -1,7 +1,7 @@
-html {
-    font-family: var(--ls-font-family),tabler-icons,sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol!important;
+:root {
+    --ff-temp: var(--ls-font-family);
+    --ls-font-family: var(--ff-temp), 'tabler-icons';
 }
-
 #taPi-toggle-icon {
     display: block;
     width: 21px;
